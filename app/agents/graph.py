@@ -16,15 +16,14 @@ def planner_node(state: AgentState):
     Analyzes the LC requirements and creates a plan.
     Thinking: "I need to check if the B/L port matches the LC and if the Invoice description matches."
     """
-    print("--- 🧠 Planner: Analyzing Documents ---")
+    print(f"--- 🧠 Planner: Analyzing Documents for Scenario: {state.scenario_id} ---")
     
-    # Action: Pick Data (Simulated retrieval)
-    # In a real agent, the planner might decide WHICH tools to call. 
-    # Here we load the context for the experts.
-    lc = pick_lc_data("mock/lc.md")
-    inv = pick_invoice_data("mock/inv.md")
-    bl = pick_bl_data("mock/bl.md")
-    pl = pick_packing_list_data("mock/pl.md") # New Data
+    # Action: Pick Data (Simulated retrieval with scenario_id)
+    sid = state.scenario_id
+    lc = pick_lc_data("mock/lc.md", sid)
+    inv = pick_invoice_data("mock/inv.md", sid)
+    bl = pick_bl_data("mock/bl.md", sid)
+    pl = pick_packing_list_data("mock/pl.md", sid)
     
     # Generate Plan
     plan = [
