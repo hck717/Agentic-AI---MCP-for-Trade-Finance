@@ -9,53 +9,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")
 
 from app.agents.graph import build_graph
 
-# --- LLM Integration (Local Llama 3.2 via Ollama) ---
-try:
-    from openai import OpenAI
-    # Point to local Ollama instance
-    client = OpenAI(
-        base_url="http://localhost:11434/v1",
-        api_key="ollama" # Required but ignored by Ollama
-    )
-    HAS_LLM = True
-except Exception:
-    HAS_LLM = False
-
-def query_llm(user_query, context_data):
-    """
-    Uses local Llama 3.2 to answer questions based on the compliance check results.
-    """
-    if not HAS_LLM:
-        return "⚠️ OpenAI SDK not found. Please install 'openai' package."
-
-    system_prompt = f"""
-    You are an expert Trade Finance Compliance Assistant.
-    You have performed a compliance check on a Letter of Credit (LC) and a set of documents.
-    
-    Here is the detailed result of the check in JSON format:
-    ```json
-    {json.dumps(context_data, indent=2)}
-    ```
-    
-    Your Goal: Answer the user's question accurately based ONLY on the provided JSON data.
-    - If the user asks "Why failed?", look for "status": "Discrepant" in the results.
-    - If the user asks about specific documents, check the "validation_results" list.
-    - Be concise, professional, and explain the reasoning clearly using UCP 600 / ISBP 745 terminology if applicable.
-    """
-    
-    try:
-        response = client.chat.completions.create(
-            model="llama3.2", # Local model name
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_query}
-            ],
-            temperature=0
-        )
-        return response.choices[0].message.content
-    except Exception as e:
-        return f"Error calling Local LLM: {str(e)}. Ensure Ollama is running and 'llama3.2' is pulled."
-
+# --- Page Config ---
 st.set_page_config(
     page_title="AI Trade Finance Agent",
     page_icon="🚢",
@@ -116,27 +70,79 @@ with st.sidebar:
     selected_scenario_id = scenario_map[scenario_option]
 
     st.markdown("---")
+    st.header("🤖 AI Settings")
+    
+    # 2. Dynamic Ollama URL Configuration
+    ollama_url = st.text_input(
+        "Ollama API URL:", 
+        value="http://localhost:11434/v1",
+        help="Change this if your Ollama is running on a different port (e.g., :11435)"
+    )
+    
+    st.markdown("---")
     st.header("📂 Document Check")
     st.checkbox("Letter of Credit (LC)", value=True, disabled=True)
     st.checkbox("Bill of Lading (B/L)", value=True, disabled=True)
     st.checkbox("Commercial Invoice", value=True, disabled=True)
     st.checkbox("Packing List (PL)", value=True, disabled=True)
     
-    st.markdown("---")
+    # Check Connection Button
+    if st.button("🔄 Check Connection"):
+         try:
+            from openai import OpenAI
+            tmp_client = OpenAI(base_url=ollama_url, api_key="ollama")
+            tmp_client.models.list()
+            st.success(f"Connected to {ollama_url}!")
+         except Exception as e:
+            st.error(f"Connection Failed: {e}")
+            
+    st.caption("v1.5.0 | Built by hck717")
+
+# --- Initialize LLM Client ---
+try:
+    from openai import OpenAI
+    client = OpenAI(
+        base_url=ollama_url,
+        api_key="ollama"
+    )
+    HAS_LLM = True
+except Exception:
+    HAS_LLM = False
+
+def query_llm(user_query, context_data):
+    """
+    Uses local Llama 3.2 to answer questions based on the compliance check results.
+    """
+    if not HAS_LLM:
+        return "⚠️ OpenAI SDK not found. Please install 'openai' package."
+
+    system_prompt = f"""
+    You are an expert Trade Finance Compliance Assistant.
+    You have performed a compliance check on a Letter of Credit (LC) and a set of documents.
     
-    # LLM Status Check
-    if HAS_LLM:
-        try:
-            # Simple health check to Ollama
-            client.models.list()
-            st.success("🟢 Local Llama 3.2 Connected")
-        except:
-             st.error("🔴 Ollama Connection Failed")
-             st.caption("Ensure `ollama serve` is running")
-    else:
-        st.warning("⚠️ OpenAI SDK missing")
+    Here is the detailed result of the check in JSON format:
+    ```json
+    {json.dumps(context_data, indent=2)}
+    ```
     
-    st.caption("v1.4.0 | Built by hck717")
+    Your Goal: Answer the user's question accurately based ONLY on the provided JSON data.
+    - If the user asks "Why failed?", look for "status": "Discrepant" in the results.
+    - If the user asks about specific documents, check the "validation_results" list.
+    - Be concise, professional, and explain the reasoning clearly using UCP 600 / ISBP 745 terminology if applicable.
+    """
+    
+    try:
+        response = client.chat.completions.create(
+            model="llama3.2", 
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_query}
+            ],
+            temperature=0
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        return f"Error calling Local LLM: {str(e)}. Ensure Ollama is running at {ollama_url} and 'llama3.2' is pulled."
 
 # --- Scenario Info Box ---
 if selected_scenario_id == "apple":
@@ -278,7 +284,7 @@ if prompt := st.chat_input("Ask about the compliance check..."):
                     "validation_details": state["validation_results"]
                 }
                 # Call LLM
-                with st.spinner("Llama 3.2 is thinking..."):
+                with st.spinner(f"Llama 3.2 is thinking (via {ollama_url})..."):
                     response = query_llm(prompt, context)
             else:
                 response = "⚠️ Chat is disabled because 'openai' package is missing."
