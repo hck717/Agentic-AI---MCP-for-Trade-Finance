@@ -12,5 +12,8 @@ COPY . .
 # Set PYTHONPATH to include the root directory
 ENV PYTHONPATH=/app
 
-# Default command to run the POC
-CMD ["python", "-m", "app.main"]
+# Expose Streamlit port
+EXPOSE 8501
+
+# Default command to run the Streamlit App
+CMD ["streamlit", "run", "app/ui/streamlit_app.py", "--server.address=0.0.0.0"]
