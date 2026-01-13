@@ -53,7 +53,9 @@ class PackingListData(BaseModel):
 
 class AgentState(BaseModel):
     """The shared state of the Multi-Agent System"""
-    scenario_id: str = "apple" # Default to apple
+    scenario_id: str = "apple"
+    ollama_url: str = "http://localhost:11434/v1" # New: Dynamic LLM URL
+    
     lc_data: Optional[LCData] = None
     invoice_data: Optional[InvoiceData] = None
     bl_data: Optional[BLData] = None
