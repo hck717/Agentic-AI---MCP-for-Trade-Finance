@@ -1,4 +1,4 @@
-from app.models.schemas import LCData, InvoiceData, BLData
+from app.models.schemas import LCData, InvoiceData, BLData, PackingListData
 
 # --- Extraction Scripts (The "Pick" Logic) ---
 
@@ -40,5 +40,17 @@ def pick_bl_data(file_path: str) -> BLData:
         port_of_discharge="Hong Kong Port",
         shipped_on_board_date="2026-04-25",
         goods_description="Electronic Devices - Apple iPhone", # Generic (ISBP 745 Art. E26)
-        carrier="Maersk Line"
+        carrier="Maersk Line",
+        gross_weight="1500 KGS" # Added for cross-check
+    )
+
+def pick_packing_list_data(file_path: str) -> PackingListData:
+    """Extracts structured data from the Packing List."""
+    # Mocking extraction from 'mock_documents/1_APPLE_IPHONE_IMPORT/PACKING_LIST_PL-2026-00145.md'
+    return PackingListData(
+        pl_number="PL-2026-00145",
+        goods_description="Apple iPhone 15 Pro Max",
+        gross_weight="1500 KGS",
+        net_weight="1200 KGS",
+        total_packages="100 Cartons"
     )
