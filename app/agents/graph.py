@@ -1,13 +1,13 @@
 from typing import TypedDict, List
 from langgraph.graph import StateGraph, END
-from app.models.schemas import AgentState, LCData, InvoiceData, BLData
+from app.models.schemas import AgentState, LCData, InvoiceData, BLData, PackingListData
 
 # IMPORT FROM NEW SKILLS STRUCTURE
 from app.skills.trade_document_processing.scripts.extraction import (
-    pick_lc_data, pick_invoice_data, pick_bl_data
+    pick_lc_data, pick_invoice_data, pick_bl_data, pick_packing_list_data
 )
 from app.skills.trade_document_processing.scripts.validation import (
-    execute_semantic_validation, execute_port_validation, execute_date_validation
+    execute_semantic_validation, execute_port_validation, execute_date_validation, execute_weight_validation
 )
 
 # --- Node 1: Planner (The "Plan" Step) ---
@@ -24,19 +24,22 @@ def planner_node(state: AgentState):
     lc = pick_lc_data("mock/lc.md")
     inv = pick_invoice_data("mock/inv.md")
     bl = pick_bl_data("mock/bl.md")
+    pl = pick_packing_list_data("mock/pl.md") # New Data
     
     # Generate Plan
     plan = [
         "Check Port of Loading",
         "Check Latest Shipment Date",
         "Check Goods Description (Invoice)",
-        "Check Goods Description (B/L)"
+        "Check Goods Description (B/L)",
+        "Check Packing List Weight vs B/L"
     ]
     
     return {
         "lc_data": lc,
         "invoice_data": inv,
         "bl_data": bl,
+        "packing_list_data": pl,
         "plan": plan
     }
 
@@ -87,18 +90,39 @@ def invoice_expert_node(state: AgentState):
 
     return {"validation_results": state.validation_results + results}
 
-# --- Node 4: Reviewer (The "Synthesize" Step) ---
+# --- Node 4: Packing List Expert (The "Execute" Step) ---
+def packing_list_expert_node(state: AgentState):
+    """
+    Agent 3: Checks Packing List details and Cross-Checks.
+    """
+    print("--- 📦 Agent 3 (PL Expert): Checking Cargo Details ---")
+    lc = state.lc_data
+    pl = state.packing_list_data
+    bl = state.bl_data
+    results = []
+    
+    # Check 1: Description
+    desc_check = execute_semantic_validation(lc.goods_description, pl.goods_description, "PackingList")
+    results.append({"check": "Goods Description", "doc": "PackingList", **desc_check})
+    
+    # Check 2: Weight Cross-Check (PL vs B/L)
+    weight_check = execute_weight_validation(bl.gross_weight, pl.gross_weight)
+    results.append({"check": "Gross Weight (vs B/L)", "doc": "PackingList", **weight_check})
+
+    return {"validation_results": state.validation_results + results}
+
+# --- Node 5: Reviewer (The "Synthesize" Step) ---
 def reviewer_node(state: AgentState):
     """
-    Agent 3: Synthesizes results and checks for conflicts (UCP 600 Art 14).
+    Agent 4: Synthesizes results and checks for conflicts (UCP 600 Art 14).
     """
-    print("--- ⚖️ Agent 3 (Reviewer): Finalizing Verdict ---")
+    print("--- ⚖️ Agent 4 (Reviewer): Finalizing Verdict ---")
     
     discrepancies = [r for r in state.validation_results if r["status"] == "Discrepant"]
     
     if not discrepancies:
         verdict = "Compliant"
-        reason = "All documents consistent with LC terms and UCP 600."
+        reason = "All documents (LC, Invoice, B/L, Packing List) consistent with terms and UCP 600."
     else:
         verdict = "Discrepant"
         reason = f"Found {len(discrepancies)} discrepancies: " + "; ".join([d["reason"] for d in discrepancies])
@@ -116,16 +140,17 @@ def build_graph():
     workflow.add_node("planner", planner_node)
     workflow.add_node("bl_expert", bl_expert_node)
     workflow.add_node("invoice_expert", invoice_expert_node)
+    workflow.add_node("packing_list_expert", packing_list_expert_node)
     workflow.add_node("reviewer", reviewer_node)
     
     # Define Edges (The Flow)
     workflow.set_entry_point("planner")
     
-    # Simple Sequence for POC: Planner -> BL -> Invoice -> Reviewer
-    # In production, BL and Invoice could run in parallel
+    # Flow: Planner -> BL -> Invoice -> PL -> Reviewer
     workflow.add_edge("planner", "bl_expert")
     workflow.add_edge("bl_expert", "invoice_expert")
-    workflow.add_edge("invoice_expert", "reviewer")
+    workflow.add_edge("invoice_expert", "packing_list_expert")
+    workflow.add_edge("packing_list_expert", "reviewer")
     workflow.add_edge("reviewer", END)
     
     return workflow.compile()
