@@ -92,6 +92,10 @@ The **Reviewer Node** synthesizes all findings into a professional-grade report.
 docker build -t trade-finance-agent .
 docker run -p 8501:8501 trade-finance-agent
 ```
+    1.  Go to the Sidebar in the Web App.
+    2.  Change **Ollama API URL** from `http://localhost:11434/v1` to:
+        ```
+        http://host.docker.internal:11434/v1
 
 ---
 
