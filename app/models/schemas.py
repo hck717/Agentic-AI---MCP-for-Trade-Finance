@@ -39,7 +39,7 @@ class BLData(BaseModel):
     shipped_on_board_date: str
     goods_description: str
     carrier: str
-    gross_weight: str # Added for Cross-Check
+    gross_weight: str
 
 class PackingListData(BaseModel):
     """Structured Data Extracted from Packing List"""
@@ -53,10 +53,11 @@ class PackingListData(BaseModel):
 
 class AgentState(BaseModel):
     """The shared state of the Multi-Agent System"""
+    scenario_id: str = "apple" # Default to apple
     lc_data: Optional[LCData] = None
     invoice_data: Optional[InvoiceData] = None
     bl_data: Optional[BLData] = None
-    packing_list_data: Optional[PackingListData] = None # New Data
+    packing_list_data: Optional[PackingListData] = None
     
     # The Plan (List of checks to perform)
     plan: List[str] = Field(default_factory=list)
@@ -69,4 +70,4 @@ class AgentState(BaseModel):
     reasoning: str = ""
     
     # Chat Context
-    chat_history: List[dict] = Field(default_factory=list) # For storing Q&A
+    chat_history: List[dict] = Field(default_factory=list)
