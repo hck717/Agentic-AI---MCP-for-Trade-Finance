@@ -1,5 +1,12 @@
 import streamlit as st
 import time
+import sys
+import os
+
+# --- Fix Python Path for Import ---
+# Add the project root directory to sys.path so we can import 'app' modules
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+
 from app.agents.graph import build_graph
 
 st.set_page_config(
