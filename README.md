@@ -60,12 +60,15 @@ Located in `app/agents/graph.py`, the workflow consists of:
 - **B/L Expert:** Specialist agent that validates logistics data (Ports, Dates).
 - **Invoice Expert:** Specialist agent that validates financial data (Amounts, Specific Descriptions).
 - **Packing List Expert:** Cross-checks weights and package counts against B/L and Invoice.
-- **Reviewer Node:** Synthesizes findings and checks for UCP 600 Art. 14 conflicts.
+- **Reviewer Node:** Uses the **Finalize Compliance** Agent Skill to synthesize all specialist results into a single verdict and narrative reasoning.
 
 ### 2. The Skills (The "Hands") 🛠️
-Located in `app/skills/`, we use a modular **Agent Skill** structure:
-- **Extraction:** Extracts structured data (LC, Inv, B/L, PL).
-- **Validation:** Performs semantic logic (Description matching, Weight cross-check).
+Located in `app/skills/`, the system follows Anthropic-style **Agent Skills** design:
+- Each skill is a folder with `SKILL.md`, `forms.md`/`rules.md`, optional `reference.md`, and a `scripts/` subdirectory.
+- **Trade Document Processing Skill** (`app/skills/trade_document_processing/`): handles extraction and low-level validation of LC, Invoice, B/L, and Packing List fields.
+- **Finalize Compliance Skill** (`app/skills/finalize_compliance/`): aggregates `validation_results` from all experts and decides the overall LC compliance.
+
+This keeps domain policy and scripts co-located so that agents can "enter" a skill folder, read its instructions, and call the appropriate scripts.
 
 ---
 
