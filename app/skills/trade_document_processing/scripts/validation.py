@@ -34,6 +34,14 @@ def execute_semantic_validation(lc_desc: str, doc_desc: str, doc_type: str) -> d
                 "status": "Compliant",
                 "reason": "Invoice description corresponds to and adds specific details to LC description (UCP 600 Art. 18)."
             }
+            
+    # 4. Packing List Logic
+    if doc_type == "PackingList":
+         if lc_desc in doc_desc or doc_desc in lc_desc:
+            return {
+                "status": "Compliant",
+                "reason": "Packing List description consistent with LC."
+            }
 
     return {"status": "Discrepant", "reason": f"Description mismatch: '{doc_desc}' does not match '{lc_desc}'."}
 
@@ -62,3 +70,10 @@ def execute_date_validation(lc_date: str, doc_date: str) -> dict:
         return {"status": "Compliant", "reason": f"Date {doc_date} is within limit {lc_date}."}
     else:
         return {"status": "Discrepant", "reason": f"Late shipment! {doc_date} is after {lc_date}."}
+
+def execute_weight_validation(bl_weight: str, pl_weight: str) -> dict:
+    """Checks if weights match between documents."""
+    if bl_weight.replace(" ", "") == pl_weight.replace(" ", ""):
+         return {"status": "Compliant", "reason": f"Gross weight {pl_weight} matches B/L."}
+    else:
+         return {"status": "Discrepant", "reason": f"Weight mismatch! B/L: {bl_weight} vs PL: {pl_weight}"}
