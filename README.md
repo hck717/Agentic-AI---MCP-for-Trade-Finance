@@ -17,6 +17,28 @@ A classic compliance challenge is the **Description Mismatch**:
 
 ---
 
+## 🔒 Data Privacy & Security (100% Private)
+
+This solution is designed for **Zero Data Leakage** architectures, making it suitable for strict banking environments.
+
+### Why It's 100% Secure:
+1.  **Local "Brain" (On-Premise AI):**
+    *   The system uses **Ollama** running **Llama 3.2** entirely on your local machine.
+    *   No data is ever sent to OpenAI, Google, or any cloud provider.
+    *   The "reasoning" happens on your own CPU/GPU.
+
+2.  **Air-Gap Capable:**
+    *   The entire application (Streamlit UI, Python Logic, AI Model) works **offline**.
+    *   You can disconnect your internet, and the compliance check will still function perfectly.
+
+3.  **No External API Calls:**
+    *   Document extraction and validation logic (`validation.py`) are pure local Python scripts.
+    *   No sensitive Letter of Credit data ever traverses the public internet.
+
+*Compliance Ready: Meets strict data residency and banking secrecy requirements by bringing the AI to the data, not the data to the AI.*
+
+---
+
 ## 🖥️ Web Interface Features (v1.5)
 
 The project includes a **Streamlit UI** to visualize the agent's reasoning process:
