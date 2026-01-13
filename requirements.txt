@@ -1,3 +1,4 @@
+openai
 langgraph
 pydantic
 streamlit
