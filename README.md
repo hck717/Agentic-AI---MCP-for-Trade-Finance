@@ -17,14 +17,14 @@ A classic compliance challenge is the **Description Mismatch**:
 
 ---
 
-## 🖥️ Web Interface Features (v1.1)
+## 🖥️ Web Interface Features (v1.5)
 
 The project includes a **Streamlit UI** to visualize the agent's reasoning process:
 
 *   **🤖 Real-time Agent Thoughts:** Watch the **Planner**, **B/L Expert**, **Invoice Expert**, and **Packing List Expert** think and act in real-time.
 *   **✅ Visual Verdict:** Clear Green (Compliant) or Red (Discrepant) report cards.
 *   **🔍 Explainable AI:** Expandable sections showing the exact ISBP 745 rules applied.
-*   **💬 AI Chat Assistant:** Ask questions like "Why is the weight compliant?" or "Why is the B/L accepted?" to get instant, context-aware answers.
+*   **💬 Local AI Chat (Ollama):** Ask questions like "Why did the Invoice fail?" using your local Llama 3.2 model. No data leaves your machine!
 
 ---
 
@@ -83,9 +83,23 @@ Located in `app/skills/`, we use a modular **Agent Skill** structure:
 
 2.  **Run the Container:**
     ```bash
+    # For Mac/Windows (Ollama on host):
     docker run -p 8501:8501 trade-finance-agent
+    
+    # For Linux (Ollama on host):
+    docker run -p 8501:8501 --add-host=host.docker.internal:host-gateway trade-finance-agent
     ```
-    👉 Access the UI at `http://localhost:8501`
+
+3.  **Connecting to Ollama from Docker:**
+    If you see `🔴 Ollama Connection Failed` inside the Docker app:
+    1.  Go to the Sidebar in the Web App.
+    2.  Change **Ollama API URL** from `http://localhost:11434/v1` to:
+        ```
+        http://host.docker.internal:11434/v1
+        ```
+    3.  Click **🔄 Check Connection**.
+
+    *Why? `localhost` inside Docker refers to the container itself, not your computer. `host.docker.internal` is the special address to reach your host machine.*
 
 ---
 
