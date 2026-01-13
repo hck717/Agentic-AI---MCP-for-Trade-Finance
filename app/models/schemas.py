@@ -39,6 +39,15 @@ class BLData(BaseModel):
     shipped_on_board_date: str
     goods_description: str
     carrier: str
+    gross_weight: str # Added for Cross-Check
+
+class PackingListData(BaseModel):
+    """Structured Data Extracted from Packing List"""
+    pl_number: str
+    goods_description: str
+    gross_weight: str
+    net_weight: str
+    total_packages: str
 
 # --- 2. Agent State (LangGraph State) ---
 
@@ -47,6 +56,7 @@ class AgentState(BaseModel):
     lc_data: Optional[LCData] = None
     invoice_data: Optional[InvoiceData] = None
     bl_data: Optional[BLData] = None
+    packing_list_data: Optional[PackingListData] = None # New Data
     
     # The Plan (List of checks to perform)
     plan: List[str] = Field(default_factory=list)
@@ -57,3 +67,6 @@ class AgentState(BaseModel):
     # Final Verdict
     final_verdict: Optional[Literal["Compliant", "Discrepant"]] = None
     reasoning: str = ""
+    
+    # Chat Context
+    chat_history: List[dict] = Field(default_factory=list) # For storing Q&A
