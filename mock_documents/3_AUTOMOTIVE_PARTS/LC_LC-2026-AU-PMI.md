@@ -1,86 +1,82 @@
-# LETTER OF CREDIT
+# SWIFT MT700 - ISSUE OF A DOCUMENTARY CREDIT
 
-**Issuing Bank:** ICICI Bank Limited
-
----
-
-## Header Section
-
-| Item | Details |
-|------|----------|
-| **LC Number** | LC/2026/AU/PMI |
-| **Issue Date** | 2026-01-05 |
-| **Expiry Date** | 2026-03-15 |
-| **Type** | Irrevocable Confirmed LC |
-| **Availability** | Sight Payment |
+**Sender:** COMMONWEALTH BANK OF AUSTRALIA (CTBAAU2S)
+**Receiver:** STATE BANK OF INDIA (SBININBB)
 
 ---
 
-## Amount & Currency
+### :20: DOCUMENTARY CREDIT NUMBER
+LC/2026/AU/PMI
 
-| Item | Details |
-|------|----------|
-| **LC Amount** | AUD 250,000 |
-| **Currency** | AUD |
-| **Tolerance (Plus)** | 2% |
-| **Tolerance (Minus)** | 2% |
+### :31C: DATE OF ISSUE
+251220 (2025-12-20)
+
+### :31D: DATE AND PLACE OF EXPIRY
+260430 AUSTRALIA (2026-04-30)
+
+### :50: APPLICANT
+OZAUTO SPARES PTY LTD
+123 COLLINS STREET,
+MELBOURNE, VIC 3000,
+AUSTRALIA.
+
+### :59: BENEFICIARY
+PRECISION MANUFACTURING INDIA PVT LTD
+SEZ UNIT 4, CHENNAI INDUSTRIAL AREA,
+CHENNAI, TAMIL NADU 600001,
+INDIA.
+
+### :32B: CURRENCY CODE, AMOUNT
+CURRENCY: AUD
+AMOUNT: 250,000.00
+
+### :39A: PERCENTAGE CREDIT AMOUNT TOLERANCE
+00/00
+
+### :41D: AVAILABLE WITH... BY...
+STATE BANK OF INDIA
+BY SIGHT PAYMENT
+
+### :43P: PARTIAL SHIPMENTS
+NOT ALLOWED
+
+### :43T: TRANSSHIPMENT
+ALLOWED
+
+### :44E: PORT OF LOADING/AIRPORT OF DEPARTURE
+PORT OF CHENNAI, INDIA
+
+### :44F: PORT OF DISCHARGE/AIRPORT OF DESTINATION
+PORT OF MELBOURNE, AUSTRALIA
+
+### :44C: LATEST DATE OF SHIPMENT
+2026-03-31
+
+### :45A: DESCRIPTION OF GOODS AND/OR SERVICES
+AUTOMOTIVE TRANSMISSION AND GEARBOX PARTS
+1. PART NO: TM-500-G2 (TRANSMISSION) - 25000 UNITS
+2. PART NO: GB-200-S1 (GEARBOX) - 25000 UNITS
+DELIVERY TERMS: CIF MELBOURNE AS PER INCOTERMS 2020
+
+### :46A: DOCUMENTS REQUIRED
+1. SIGNED COMMERCIAL INVOICE IN 3 ORIGINALS MENTIONING PART NUMBERS.
+2. FULL SET 3/3 ORIGINAL CLEAN ON BOARD OCEAN BILL OF LADING MARKED 'FREIGHT PREPAID' AND NOTIFY APPLICANT.
+3. PACKING LIST IN 2 ORIGINALS.
+4. CERTIFICATE OF ORIGIN ISSUED BY INDIAN EXPORT PROMOTION COUNCIL.
+5. BENEFICIARY'S COPY OF VALID ISO 9001:2015 CERTIFICATE.
+6. QUALITY INSPECTION REPORT ISSUED BY BENEFICIARY'S QC DEPARTMENT.
+
+### :47A: ADDITIONAL CONDITIONS
+1. ALL DOCUMENTS MUST BE IN ENGLISH.
+2. SHIPMENT MUST BE IN ONE LOT.
+3. B/L MUST SHOW SINGAPORE AS TRANSSHIPMENT PORT.
+4. INVOICE MUST DECLARE THAT GOODS ARE MANUFACTURED ACCORDING TO OEM STANDARDS.
+
+### :71D: CHARGES
+ALL BANKING CHARGES OUTSIDE AUSTRALIA ARE FOR BENEFICIARY'S ACCOUNT.
+
+### :48: PERIOD FOR PRESENTATION
+DOCUMENTS TO BE PRESENTED WITHIN 21 DAYS FROM THE DATE OF SHIPMENT.
 
 ---
-
-## Parties
-
-### Applicant (Buyer)
-```
-Toyota Parts Australia Pty Ltd
-Melbourne, Australia
-```
-
-### Beneficiary (Seller)
-```
-Precision Manufacturing India Pvt Ltd
-Bangalore, India
-```
-
----
-
-## Goods Description
-
-**Goods:** Automotive transmission components and gearbox parts
-
-**Quantity:** 50000 units
-
-**Unit Price:** AUD 5
-
----
-
-## Shipping Terms
-
-| Item | Details |
-|------|----------|
-| **Incoterms** | CIF Melbourne |
-| **Port of Loading** | Port of Chennai |
-| **Port of Discharge** | Port of Melbourne |
-| **Latest Shipment Date** | 2026-02-28 |
-
----
-
-## Required Documents
-
-- Commercial Invoice (original and 2 copies)
-- Bill of Lading (original and 2 copies)
-- Packing List
-- Quality Certification (ISO 9001)
-- Insurance Certificate (CIF)
-
----
-
-## Special Conditions
-
-- ISO 9001 certification mandatory
-- Quality inspection report required
-- Partial shipments allowed (max 3)
-- Transhipment not allowed
-
----
-
-**Note:** This is a sample for demonstration. All details are for training purposes only.
+**SUBJECT TO UCP 600.**

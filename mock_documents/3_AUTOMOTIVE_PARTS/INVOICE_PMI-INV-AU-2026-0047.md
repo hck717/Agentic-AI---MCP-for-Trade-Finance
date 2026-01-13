@@ -1,64 +1,40 @@
 # COMMERCIAL INVOICE
 
----
+**Seller:**
+PRECISION MANUFACTURING INDIA PVT LTD
+CHENNAI, TAMIL NADU, INDIA
 
-## Invoice Header
-
-| Item | Details |
-|------|----------|
-| **Invoice Number** | PMI/INV/AU/2026/0047 |
-| **Invoice Date** | 2026-02-22 |
-| **Reference LC** | LC/2026/AU/PMI |
+**Buyer:**
+OZAUTO SPARES PTY LTD
+MELBOURNE, AUSTRALIA
 
 ---
 
-## Parties
-
-### Seller (Exporter)
-```
-Precision Manufacturing India Pvt Ltd
-Bangalore, India
-```
-
-### Buyer (Importer)
-```
-Toyota Parts Australia Pty Ltd
-Melbourne, Australia
-```
+| **Invoice No.** | **Date** | **LC Reference** |
+|:--- |:--- |:--- |
+| PMI-INV-AU-2026-0047 | 2026-03-01 | LC/2026/AU/PMI |
 
 ---
 
-## Invoice Items
+### **DESCRIPTION OF GOODS**
 
-| Description | Quantity | Unit | Unit Price | Total |
-|-------------|----------|------|-----------|--------|
-| Transmission shaft assembly, 6-speed automatic, Model TZ-6AT | 30000 | units | AUD 4.80 | AUD 144,000 |
-| Planetary gearbox component set, precision-machined, ISO 9001 | 20000 | units | AUD 5.30 | AUD 106,000 |
-
----
-
-## Totals
-
-| Item | Amount |
-|------|--------|
-| **Subtotal** | AUD 250,000 |
-| **Tax** | AUD 0 |
-| **Total Amount Due** | AUD 250,000 |
+| **Part Number** | **Description** | **Quantity** | **Unit Price (AUD)** | **Amount (AUD)** |
+|:--- |:--- |:--- |:--- |:--- |
+| TM-500-G2 | Automotive Transmission Assembly | 25,000 UNITS | 6.00 | 150,000.00 |
+| GB-200-S1 | Gearbox Component (Manual) | 25,000 UNITS | 4.00 | 100,000.00 |
 
 ---
 
-## Payment Terms
-
-**Payment Terms:** LC at sight
+**TOTAL AMOUNT (CIF MELBOURNE): AUD 250,000.00**
 
 ---
 
-## Notes
+### **DECLARATIONS**
+- We certify that the goods are manufactured according to OEM standards.
+- Country of Origin: India.
+- We further declare that we hold a valid ISO 9001:2015 certification.
 
-- Currency: AUD
-- All goods described herein comply with the requirements of LC/2026/AU/PMI
-- For transactions covered by Letter of Credit
-
----
-
-**Note:** This is a sample invoice for demonstration purposes only.
+**Authorized Signature:**
+*Signature*
+Kumar Raman
+General Manager, Precision Manufacturing India Pvt Ltd

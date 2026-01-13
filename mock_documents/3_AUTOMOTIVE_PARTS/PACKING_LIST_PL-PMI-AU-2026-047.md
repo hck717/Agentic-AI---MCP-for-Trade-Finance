@@ -1,43 +1,40 @@
 # PACKING LIST
 
----
-
-## Header
-
-| Item | Details |
-|------|----------|
-| **Packing List No.** | PL/PMI/AU/2026/047 |
-| **Date** | 2026-02-23 |
-| **Invoice Number** | PMI/INV/AU/2026/0047 |
-| **B/L Number** | PMI/2026/BLG/001 |
+**Exporter:** PRECISION MANUFACTURING INDIA PVT LTD, CHENNAI, INDIA
+**Importer:** OZAUTO SPARES PTY LTD, MELBOURNE, AUSTRALIA
 
 ---
 
-## Contents
-
-| Carton Range | Description | Quantity | Gross Weight |
-|--------------|-------------|----------|---------------|
-| 1-30 | Transmission shaft assembly, 6-speed automatic, Model TZ-6AT | 30000 | 27,000 kg |
-| 31-50 | Planetary gearbox component set, precision-machined | 20000 | 18,000 kg |
+| **P/L No.** | **Date** | **Reference** |
+|:--- |:--- |:--- |
+| PL-PMI-AU-2026-047 | 2026-03-01 | PMI-INV-AU-2026-0047 |
 
 ---
 
-## Summary
+### **PACKING DETAILS**
 
-| Item | Total |
-|------|-------|
-| **Total Cartons/Packages** | 50 |
-| **Total Gross Weight** | 45,000 kg |
-
----
-
-## Packing Specifications
-
-- All items securely packaged in standard export cartons
-- Packages marked with carton numbers and shipping marks
-- Protective measures taken for transit and handling
-- All items inspected for quality before packing
+| **Pallet IDs** | **Quantity** | **Part Number** | **Net Weight (KGS)** | **Gross Weight (KGS)** |
+|:--- |:--- |:--- |:--- |:--- |
+| PAL-001 - PAL-010 | 25,000 Units | TM-500-G2 | 2,400.00 | 2,500.00 |
+| PAL-011 - PAL-020 | 25,000 Units | GB-200-S1 | 2,400.00 | 2,500.00 |
 
 ---
 
-**Note:** This packing list corresponds to the above invoice and B/L. Keep with shipping documents.
+**TOTALS:**
+- **Total Packages:** 20 Pallets
+- **Total Quantity:** 50,000 Units
+- **Total Net Weight:** 4,800.00 KGS
+- **Total Gross Weight:** 5,000.00 KGS
+
+---
+
+### **SHIPPING MARKS**
+**OZAUTO/MELB/047**
+MADE IN INDIA
+PALLET 1 TO 20
+
+---
+
+**Authorized Signature:**
+*Signature*
+Logistics Manager, Precision Manufacturing India Pvt Ltd

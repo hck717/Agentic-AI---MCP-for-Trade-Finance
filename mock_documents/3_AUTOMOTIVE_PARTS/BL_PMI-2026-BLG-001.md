@@ -1,79 +1,53 @@
-# BILL OF LADING
+# BILL OF LADING (OCEAN)
+
+**Carrier:** MEDITERRANEAN SHIPPING COMPANY (MSC)
+**B/L Number:** PMI-2026-BLG-001
 
 ---
 
-## B/L Header
+| **Shipper** | **Consignee** |
+|:--- |:--- |
+| PRECISION MANUFACTURING INDIA PVT LTD | TO THE ORDER OF: |
+| CHENNAI, INDIA | COMMONWEALTH BANK OF AUSTRALIA |
 
-| Item | Details |
-|------|----------|
-| **B/L Number** | PMI/2026/BLG/001 |
-| **On-Board Date** | 2026-02-24 |
-| **Type** | Shipped B/L |
-
----
-
-## Shipping Parties
-
-### Shipper
-```
-Precision Manufacturing India Pvt Ltd
-Bangalore, India
-```
-
-### Consignee
-```
-Toyota Parts Australia Pty Ltd
-```
+| **Notify Party** | **Vessel / Voyage** |
+|:--- |:--- |
+| OZAUTO SPARES PTY LTD | MSC EMMA / V.882W |
+| MELBOURNE, AUSTRALIA | |
 
 ---
 
-## Vessel & Voyage
-
-| Item | Details |
-|------|----------|
-| **Vessel Name** | EVERGREEN |
-| **Voyage Number** | 2242E |
+| **Port of Loading** | **Port of Discharge** | **Place of Delivery** |
+|:--- |:--- |:--- |
+| CHENNAI PORT, INDIA | MELBOURNE PORT, AUSTRALIA | MELBOURNE |
 
 ---
 
-## Ports
-
-| Item | Details |
-|------|----------|
-| **Port of Loading** | Chennai, India |
-| **Port of Discharge** | Melbourne, Australia |
+### **TRANSIT DETAILS**
+- **Transshipment Port:** SINGAPORE
 
 ---
 
-## Cargo Details
+### **PARTICULARS FURNISHED BY SHIPPER**
 
-### Description of Goods
-```
-Automotive parts - transmission and gearbox components
-```
-
-| Item | Details |
-|------|----------|
-| **Quantity** | 50000 units in pallets |
-| **Number of Packages** | 50 |
-| **Gross Weight** | 45,000 kg |
-| **Freight Charges** | AUD 3,500 |
+| **Container No / Seal No** | **Marks & Nos** | **Description of Packages & Goods** | **Gross Weight** | **Measurement** |
+|:--- |:--- |:--- |:--- |:--- |
+| MSCU4455667 / SN0098 | OZAUTO/MELB/047 | 20 PALLETS | 5000.00 KGS | 18.0 CBM |
+| | | **AUTO PARTS** | | |
+| | | (20 PALLETS CONTAINING 50,000 UNITS) | | |
 
 ---
 
-## Reference Documents
-
-| Document | Number |
-|----------|--------|
-| **Related Invoice** | PMI/INV/AU/2026/0047 |
-| **Related LC** | LC/2026/AU/PMI |
+**FREIGHT PREPAID**
 
 ---
 
-## Marks & Numbers
+### **NOTATIONS**
+- **CLEAN ON BOARD**
+- **DATE OF SHIPMENT:** 2026-03-10
+- **SHIPPED ON BOARD DATE:** 2026-03-10
 
-All packages marked and numbered according to shipping marks provided.
-
----
-
-**Note:** This is a sample Bill of Lading for demonstration purposes only. Original B/Ls are typically issued in sets of 3.
+**Signed for the Carrier:**
+*Signature*
+As Agent for MSC
+Dated: 2026-03-12 at Chennai
