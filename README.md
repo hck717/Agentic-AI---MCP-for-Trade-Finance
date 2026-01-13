@@ -19,7 +19,7 @@ A classic compliance challenge is the **Description Mismatch**:
 
 ## 🖥️ Web Interface Features (v1.1)
 
-The project now includes a **Streamlit UI** to visualize the agent's reasoning process:
+The project includes a **Streamlit UI** to visualize the agent's reasoning process:
 
 *   **🤖 Real-time Agent Thoughts:** Watch the **Planner**, **B/L Expert**, **Invoice Expert**, and **Packing List Expert** think and act in real-time.
 *   **✅ Visual Verdict:** Clear Green (Compliant) or Red (Discrepant) report cards.
