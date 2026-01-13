@@ -19,6 +19,9 @@ from app.skills.finalize_compliance.scripts.finalize_compliance import (
     finalize_compliance_from_results,
 )
 
+# REFERENCING UTILITY
+from app.utils.referencing import generate_professional_report
+
 
 # --- Node 1: Planner (The "Plan" Step) ---
 
@@ -32,6 +35,14 @@ def planner_node(state: AgentState):
     inv = pick_invoice_data("mock/inv.md", sid)
     bl = pick_bl_data("mock/bl.md", sid)
     pl = pick_packing_list_data("mock/pl.md", sid)
+
+    # Initialize Evidence Map
+    evidence_map = {
+        "E1": f"Letter of Credit ({sid})",
+        "E2": f"Commercial Invoice ({sid})",
+        "E3": f"Bill of Lading ({sid})",
+        "E4": f"Packing List ({sid})",
+    }
 
     # Generate Plan
     plan = [
@@ -48,6 +59,7 @@ def planner_node(state: AgentState):
         "bl_data": bl,
         "packing_list_data": pl,
         "plan": plan,
+        "evidence_map": evidence_map,
     }
 
 
@@ -60,19 +72,19 @@ def bl_expert_node(state: AgentState):
     bl = state.bl_data
     results = []
 
-    # Check 1: Port Validation (Logic/Reasoning)
+    # Check 1: Port Validation
     port_check = execute_port_validation(lc.port_of_loading, bl.port_of_loading)
-    results.append({"check": "Port Loading", "doc": "B/L", **port_check})
+    results.append({"check": "Port Loading", "doc": "B/L", "evidence_ids": ["E1", "E3"], **port_check})
 
     # Check 2: Date Validation
     date_check = execute_date_validation(lc.latest_shipment_date, bl.shipped_on_board_date)
-    results.append({"check": "Shipment Date", "doc": "B/L", **date_check})
+    results.append({"check": "Shipment Date", "doc": "B/L", "evidence_ids": ["E1", "E3"], **date_check})
 
-    # Check 3: Description Validation (Tricky Case: Generic Term)
+    # Check 3: Description Validation
     desc_check = execute_semantic_validation(
         lc.goods_description, bl.goods_description, "BL"
     )
-    results.append({"check": "Goods Description", "doc": "B/L", **desc_check})
+    results.append({"check": "Goods Description", "doc": "B/L", "evidence_ids": ["E1", "E3"], **desc_check})
 
     return {"validation_results": state.validation_results + results}
 
@@ -86,18 +98,18 @@ def invoice_expert_node(state: AgentState):
     inv = state.invoice_data
     results = []
 
-    # Check 1: Description Validation (Specific Term)
+    # Check 1: Description Validation
     desc_check = execute_semantic_validation(
         lc.goods_description, inv.goods_description, "Invoice"
     )
-    results.append({"check": "Goods Description", "doc": "Invoice", **desc_check})
+    results.append({"check": "Goods Description", "doc": "Invoice", "evidence_ids": ["E1", "E2"], **desc_check})
 
-    # Check 2: Amount (Simple math)
+    # Check 2: Amount
     if inv.amount <= lc.amount:
         res = {"status": "Compliant", "reason": "Amount within limit."}
     else:
         res = {"status": "Discrepant", "reason": "Overdrawn amount."}
-    results.append({"check": "Amount", "doc": "Invoice", **res})
+    results.append({"check": "Amount", "doc": "Invoice", "evidence_ids": ["E1", "E2"], **res})
 
     return {"validation_results": state.validation_results + results}
 
@@ -116,12 +128,12 @@ def packing_list_expert_node(state: AgentState):
     desc_check = execute_semantic_validation(
         lc.goods_description, pl.goods_description, "PackingList"
     )
-    results.append({"check": "Goods Description", "doc": "PackingList", **desc_check})
+    results.append({"check": "Goods Description", "doc": "PackingList", "evidence_ids": ["E1", "E4"], **desc_check})
 
     # Check 2: Weight Cross-Check (PL vs B/L)
     weight_check = execute_weight_validation(bl.gross_weight, pl.gross_weight)
     results.append(
-        {"check": "Gross Weight (vs B/L)", "doc": "PackingList", **weight_check}
+        {"check": "Gross Weight (vs B/L)", "doc": "PackingList", "evidence_ids": ["E3", "E4"], **weight_check}
     )
 
     return {"validation_results": state.validation_results + results}
@@ -133,11 +145,20 @@ def reviewer_node(state: AgentState):
     """Agent 4: Uses the finalize_compliance Agent Skill to produce a verdict."""
     print("--- ⚖️ Agent 4 (Reviewer): Finalizing Verdict via Agent Skill ---")
 
+    # Call original compliance skill (Minimal logic change)
     summary = finalize_compliance_from_results(state.validation_results)
+
+    # Generate Professional Report with Evidence Appendix (New Referencing Function)
+    professional_report = generate_professional_report(
+        final_verdict=summary["final_verdict"],
+        reasoning=summary["reasoning"],
+        validation_results=state.validation_results,
+        evidence_map=state.evidence_map
+    )
 
     return {
         "final_verdict": summary["final_verdict"],
-        "reasoning": summary["reasoning"],
+        "reasoning": professional_report, # Update reasoning with professional markdown
     }
 
 
