@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import List, Optional, Literal
+from typing import List, Optional, Literal, Dict
 
 # --- 1. Standardized Document Inputs (MCP Input) ---
 
@@ -66,6 +66,9 @@ class AgentState(BaseModel):
     
     # Results from Agents
     validation_results: List[dict] = Field(default_factory=list)
+    
+    # Referencing & Appendix
+    evidence_map: Dict[str, str] = Field(default_factory=dict, description="Maps ID (E1) to Source Description")
     
     # Final Verdict
     final_verdict: Optional[Literal["Compliant", "Discrepant"]] = None
