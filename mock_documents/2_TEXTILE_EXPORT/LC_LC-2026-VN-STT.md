@@ -1,85 +1,80 @@
-# LETTER OF CREDIT
+# SWIFT MT700 - ISSUE OF A DOCUMENTARY CREDIT
 
-**Issuing Bank:** Viet Nam Technological Bank (Techcombank)
-
----
-
-## Header Section
-
-| Item | Details |
-|------|----------|
-| **LC Number** | LC/2026/VN/STT |
-| **Issue Date** | 2025-12-15 |
-| **Expiry Date** | 2026-02-28 |
-| **Type** | Irrevocable Confirmed LC |
-| **Availability** | Sight Payment |
+**Sender:** VIET NAM TECHNOLOGICAL BANK (VTCBVNVN)
+**Receiver:** COMMERZBANK AG (COBA DEFF)
 
 ---
 
-## Amount & Currency
+### :20: DOCUMENTARY CREDIT NUMBER
+LC/2026/VN/STT
 
-| Item | Details |
-|------|----------|
-| **LC Amount** | EUR 85,000 |
-| **Currency** | EUR |
-| **Tolerance (Plus)** | 5% |
-| **Tolerance (Minus)** | 5% |
+### :31C: DATE OF ISSUE
+251215 (2025-12-15)
+
+### :31D: DATE AND PLACE OF EXPIRY
+260315 VIETNAM (2026-03-15)
+
+### :50: APPLICANT
+FASHION PLUS GMBH
+MAXIMILIANSTRASSE 15,
+80539 MUNICH,
+GERMANY.
+
+### :59: BENEFICIARY
+VIETNAMESE SILK TRADING CO LTD
+123 LE LOI STREET, DISTRICT 1,
+HO CHI MINH CITY,
+VIETNAM.
+
+### :32B: CURRENCY CODE, AMOUNT
+CURRENCY: EUR
+AMOUNT: 85,000.00
+
+### :39A: PERCENTAGE CREDIT AMOUNT TOLERANCE
+05/05
+
+### :41D: AVAILABLE WITH... BY...
+ANY BANK IN VIETNAM
+BY SIGHT PAYMENT
+
+### :43P: PARTIAL SHIPMENTS
+ALLOWED
+
+### :43T: TRANSSHIPMENT
+ALLOWED
+
+### :44E: PORT OF LOADING/AIRPORT OF DEPARTURE
+PORT OF HO CHI MINH CITY, VIETNAM
+
+### :44F: PORT OF DISCHARGE/AIRPORT OF DESTINATION
+PORT OF HAMBURG, GERMANY
+
+### :44C: LATEST DATE OF SHIPMENT
+260215 (2026-02-15)
+
+### :45A: DESCRIPTION OF GOODS AND/OR SERVICES
+HAND-WOVEN VIETNAMESE SILK SCARVES AND TEXTILES
+1. 5000 PCS SILK SCARVES (GRADE A) @ EUR 10.00
+2. 5000 PCS SILK WRAPS (HAND-DYED) @ EUR 7.00
+DELIVERY TERMS: FOB HO CHI MINH CITY AS PER INCOTERMS 2020
+
+### :46A: DOCUMENTS REQUIRED
+1. SIGNED COMMERCIAL INVOICE IN 3 ORIGINALS.
+2. FULL SET 3/3 ORIGINAL CLEAN ON BOARD OCEAN BILL OF LADING, MARKED 'FREIGHT COLLECT' AND NOTIFY APPLICANT.
+3. PACKING LIST IN 3 ORIGINALS.
+4. CERTIFICATE OF ORIGIN (FORM D) ISSUED BY VIETNAM CHAMBER OF COMMERCE.
+5. PRE-SHIPMENT INSPECTION CERTIFICATE ISSUED BY SGS VIETNAM CERTIFYING QUALITY, QUANTITY AND GRADE.
+
+### :47A: ADDITIONAL CONDITIONS
+1. ALL DOCUMENTS MUST SHOW LC NUMBER.
+2. BENEFICIARY MUST SEND ONE SET OF NON-NEGOTIABLE DOCUMENTS TO APPLICANT WITHIN 5 DAYS OF SHIPMENT.
+3. INSPECTION CERTIFICATE MUST BE DATED PRIOR TO SHIPMENT DATE.
+
+### :71D: CHARGES
+ALL BANKING CHARGES OUTSIDE VIETNAM ARE FOR APPLICANT'S ACCOUNT.
+
+### :48: PERIOD FOR PRESENTATION
+DOCUMENTS TO BE PRESENTED WITHIN 15 DAYS AFTER SHIPMENT DATE.
 
 ---
-
-## Parties
-
-### Applicant (Buyer)
-```
-Fashion Plus GmbH
-Munich, Germany
-```
-
-### Beneficiary (Seller)
-```
-Vietnamese Silk Trading Co Ltd
-Ho Chi Minh City, Vietnam
-```
-
----
-
-## Goods Description
-
-**Goods:** Silk scarves and textile products
-
-**Quantity:** 10000 pieces
-
-**Unit Price:** EUR 8.50
-
----
-
-## Shipping Terms
-
-| Item | Details |
-|------|----------|
-| **Incoterms** | FOB Ho Chi Minh City |
-| **Port of Loading** | Port of Ho Chi Minh City |
-| **Port of Discharge** | Port of Hamburg |
-| **Latest Shipment Date** | 2026-02-15 |
-
----
-
-## Required Documents
-
-- Commercial Invoice
-- Bill of Lading
-- Packing List
-- Certificate of Origin (Vietnam)
-- Pre-shipment Inspection Certificate
-
----
-
-## Special Conditions
-
-- Goods must be from Vietnam
-- Pre-shipment inspection mandatory
-- 100% payment on B/L presentation
-
----
-
-**Note:** This is a sample for demonstration. All details are for training purposes only.
+**THIS CREDIT IS SUBJECT TO UCP 600.**

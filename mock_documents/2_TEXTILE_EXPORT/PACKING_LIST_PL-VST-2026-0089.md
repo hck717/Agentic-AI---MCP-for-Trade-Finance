@@ -1,43 +1,40 @@
 # PACKING LIST
 
----
-
-## Header
-
-| Item | Details |
-|------|----------|
-| **Packing List No.** | PL/VST/2026/0089 |
-| **Date** | 2026-02-12 |
-| **Invoice Number** | VST/INV/2026/0089 |
-| **B/L Number** | VCTL202602001 |
+**Exporter:** VIETNAMESE SILK TRADING CO LTD, HCMC, VIETNAM
+**Importer:** FASHION PLUS GMBH, MUNICH, GERMANY
 
 ---
 
-## Contents
-
-| Carton Range | Description | Quantity | Gross Weight |
-|--------------|-------------|----------|---------------|
-| 1-130 | Silk scarves, 100% mulberry silk | 8000 | 1,700 kg |
-| 131-200 | Silk textiles, premium grade fabric | 2000 | 800 kg |
+| **P/L No.** | **Date** | **Reference** |
+|:--- |:--- |:--- |
+| PL-VST-2026-0089 | 2026-02-05 | VST-INV-2026-0089 |
 
 ---
 
-## Summary
+### **PACKING DETAILS**
 
-| Item | Total |
-|------|-------|
-| **Total Cartons/Packages** | 200 |
-| **Total Gross Weight** | 2,500 kg |
-
----
-
-## Packing Specifications
-
-- All items securely packaged in standard export cartons
-- Packages marked with carton numbers and shipping marks
-- Protective measures taken for transit and handling
-- All items inspected for quality before packing
+| **Box Nos** | **Quantity** | **Description** | **Net Weight (KGS)** | **Gross Weight (KGS)** |
+|:--- |:--- |:--- |:--- |:--- |
+| 01 - 25 | 5,000 PCS | Silk Scarves (Grade A) | 225.00 | 250.00 |
+| 26 - 50 | 5,000 PCS | Silk Wraps (Hand-Dyed) | 225.00 | 250.00 |
 
 ---
 
-**Note:** This packing list corresponds to the above invoice and B/L. Keep with shipping documents.
+**TOTALS:**
+- **Total Packages:** 50 Boxes
+- **Total Quantity:** 10,000 Pieces
+- **Total Net Weight:** 450.00 KGS
+- **Total Gross Weight:** 500.00 KGS
+
+---
+
+### **SHIPPING MARKS**
+**FASHION PLUS / MUNICH**
+MADE IN VIETNAM
+CASE NO 1-50
+
+---
+
+**Authorized Signature:**
+*Signature & Stamp*
+Warehouse Manager, Vietnamese Silk Trading Co Ltd
