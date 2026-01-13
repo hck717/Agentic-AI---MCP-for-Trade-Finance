@@ -17,13 +17,14 @@ A classic compliance challenge is the **Description Mismatch**:
 
 ---
 
-## 🖥️ Web Interface Features
+## 🖥️ Web Interface Features (v1.1)
 
 The project now includes a **Streamlit UI** to visualize the agent's reasoning process:
 
-*   **🤖 Real-time Agent Thoughts:** Watch the "Planner", "B/L Expert", and "Invoice Expert" think and act in real-time.
+*   **🤖 Real-time Agent Thoughts:** Watch the **Planner**, **B/L Expert**, **Invoice Expert**, and **Packing List Expert** think and act in real-time.
 *   **✅ Visual Verdict:** Clear Green (Compliant) or Red (Discrepant) report cards.
-*   **🔍 Explainable AI:** Expandable sections showing the exact ISBP 745 rules applied (e.g., *why* "Electronic Devices" was accepted).
+*   **🔍 Explainable AI:** Expandable sections showing the exact ISBP 745 rules applied.
+*   **💬 AI Chat Assistant:** Ask questions like "Why is the weight compliant?" or "Why is the B/L accepted?" to get instant, context-aware answers.
 
 ---
 
@@ -33,22 +34,16 @@ The system uses a **ReAct Pattern** (Reasoning + Acting) orchestrated by **LangG
 
 ### 1. The Agents (The "Brain") 🧠
 Located in `app/agents/graph.py`, the workflow consists of:
-- **Planner Node:** Analyzes the LC to decide what needs checking (e.g., "Check Port", "Check Description").
+- **Planner Node:** Analyzes the LC to decide what needs checking.
 - **B/L Expert:** Specialist agent that validates logistics data (Ports, Dates).
 - **Invoice Expert:** Specialist agent that validates financial data (Amounts, Specific Descriptions).
+- **Packing List Expert:** Cross-checks weights and package counts against B/L and Invoice.
 - **Reviewer Node:** Synthesizes findings and checks for UCP 600 Art. 14 conflicts.
 
 ### 2. The Skills (The "Hands") 🛠️
-Located in `app/skills/`, we use a modular **Agent Skill** structure (inspired by Anthropic's PDF skills):
-
-```text
-app/skills/trade_document_processing/
-├── SKILL.md          # Documentation & Usage Guide
-├── rules.md          # Context (UCP 600 & ISBP 745 Knowledge)
-└── scripts/          # Executable Python Logic
-    ├── extraction.py # "Pick": Extracts data from docs
-    └── validation.py # "Execute": Performs semantic logic
-```
+Located in `app/skills/`, we use a modular **Agent Skill** structure:
+- **Extraction:** Extracts structured data (LC, Inv, B/L, PL).
+- **Validation:** Performs semantic logic (Description matching, Weight cross-check).
 
 ---
 
@@ -99,16 +94,6 @@ app/skills/trade_document_processing/
 - **[PICK Strategy](docs/PICK_STRATEGY.md):** Detailed breakdown of data extraction strategy.
 - **[LC Reference](docs/LC_TYPES_DETAILS_PARTIES.md):** Comprehensive guide to LC fields and parties.
 - **[Phase 2 Implementation](docs/PHASE_2_MCP_AGENTS.md):** Technical details of the Multi-Agent architecture.
-
----
-
-## 🛠️ Tech Stack
-
-- **LangGraph:** For stateful, multi-agent orchestration.
-- **Pydantic:** For strict data validation and standardized schemas.
-- **Streamlit:** For the interactive web interface.
-- **Python 3.11:** Core programming language.
-- **Docker:** For containerized deployment.
 
 ---
 
