@@ -24,51 +24,40 @@ This solution is designed for **Zero Data Leakage** architectures, making it sui
 ### Why It's 100% Secure:
 1.  **Local "Brain" (On-Premise AI):**
     *   The system uses **Ollama** running **Llama 3.2** entirely on your local machine.
-    *   No data is ever sent to OpenAI, Google, or any cloud provider.
-    *   The "reasoning" happens on your own CPU/GPU.
-
-2.  **Air-Gap Capable:**
-    *   The entire application (Streamlit UI, Python Logic, AI Model) works **offline**.
-    *   You can disconnect your internet, and the compliance check will still function perfectly.
-
-3.  **No External API Calls:**
-    *   Document extraction and validation logic (`validation.py`) are pure local Python scripts.
-    *   No sensitive Letter of Credit data ever traverses the public internet.
-
-*Compliance Ready: Meets strict data residency and banking secrecy requirements by bringing the AI to the data, not the data to the AI.*
+    *   No data is ever sent to cloud providers; reasoning happens on your own hardware.
+2.  **Air-Gap Capable:** Works entirely **offline** without external API calls.
+3.  **Local Context Protocol:** Uses **MCP** to securely connect the AI to local mock databases and files without uploading them.
 
 ---
 
-## 🖥️ Web Interface Features (v1.5)
+## 🧠 System Workflow: How It Works
 
-The project includes a **Streamlit UI** to visualize the agent's reasoning process:
+The system follows a modular **"Plan-Execute-Review"** architecture orchestrated by **LangGraph**.
 
-*   **🤖 Real-time Agent Thoughts:** Watch the **Planner**, **B/L Expert**, **Invoice Expert**, and **Packing List Expert** think and act in real-time.
-*   **✅ Visual Verdict:** Clear Green (Compliant) or Red (Discrepant) report cards.
-*   **🔍 Explainable AI:** Expandable sections showing the exact ISBP 745 rules applied.
-*   **💬 Local AI Chat (Ollama):** Ask questions like "Why did the Invoice fail?" using your local Llama 3.2 model. No data leaves your machine!
+### 1. Planning Stage (The Analyst)
+The **Planner Node** analyzes the SWIFT MT700 (LC) and identifies the required checks (e.g., ports, dates, descriptions). It assigns a unique **Evidence ID** (E1, E2, etc.) to every source document to ensure 100% traceability.
+
+### 2. Execution Stage (The Specialists)
+Specialized agents perform deep-dive validations:
+- **B/L Expert:** Validates logistics (Port of Loading/Discharge) and shipment dates.
+- **Invoice Expert:** Validates financial details and specific goods descriptions.
+- **PL Expert:** Cross-checks cargo weights and packaging details between documents.
+
+### 3. Review Stage (Evidence-Led Reasoning)
+The **Reviewer Node** synthesizes all findings into a professional-grade report.
+- **Citations:** Every claim is backed by inline citations (e.g., `[E1](#e1)`).
+- **Appendix:** A generated **Evidence Appendix** maps citations to human-readable source descriptions.
+- **Verdict:** Produces a final **Compliant** or **Discrepant** decision based on UCP 600 standards.
 
 ---
 
-## 🏗️ Architecture: Plan-Pick-Execute
+## 🏗️ Technical Stack
 
-The system uses a **ReAct Pattern** (Reasoning + Acting) orchestrated by **LangGraph**.
-
-### 1. The Agents (The "Brain") 🧠
-Located in `app/agents/graph.py`, the workflow consists of:
-- **Planner Node:** Analyzes the LC to decide what needs checking.
-- **B/L Expert:** Specialist agent that validates logistics data (Ports, Dates).
-- **Invoice Expert:** Specialist agent that validates financial data (Amounts, Specific Descriptions).
-- **Packing List Expert:** Cross-checks weights and package counts against B/L and Invoice.
-- **Reviewer Node:** Uses the **Finalize Compliance** Agent Skill to synthesize all specialist results into a single verdict and narrative reasoning.
-
-### 2. The Skills (The "Hands") 🛠️
-Located in `app/skills/`, the system follows Anthropic-style **Agent Skills** design:
-- Each skill is a folder with `SKILL.md`, `forms.md`/`rules.md`, optional `reference.md`, and a `scripts/` subdirectory.
-- **Trade Document Processing Skill** (`app/skills/trade_document_processing/`): handles extraction and low-level validation of LC, Invoice, B/L, and Packing List fields.
-- **Finalize Compliance Skill** (`app/skills/finalize_compliance/`): aggregates `validation_results` from all experts and decides the overall LC compliance.
-
-This keeps domain policy and scripts co-located so that agents can "enter" a skill folder, read its instructions, and call the appropriate scripts.
+- **Orchestration:** [LangGraph](https://www.langchain.com/langgraph) (Stateful multi-agent flows)
+- **AI Model:** [Llama 3.2](https://ollama.com/) (Local deployment via Ollama)
+- **Protocol:** [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) (Tool and data abstraction)
+- **Standards:** UCP 600 & ISBP 745 (International banking compliance rules)
+- **Interface:** Streamlit (Real-time agent thought visualization)
 
 ---
 
@@ -97,41 +86,19 @@ This keeps domain policy and scripts co-located so that agents can "enter" a ski
     ```bash
     streamlit run app/ui/streamlit_app.py
     ```
-    👉 Access the UI at `http://localhost:8501`
 
 ### Option 2: Run with Docker 🐳
-
-1.  **Build the Image:**
-    ```bash
-    docker build -t trade-finance-agent .
-    ```
-
-2.  **Run the Container:**
-    ```bash
-    # For Mac/Windows (Ollama on host):
-    docker run -p 8501:8501 trade-finance-agent
-    
-    # For Linux (Ollama on host):
-    docker run -p 8501:8501 --add-host=host.docker.internal:host-gateway trade-finance-agent
-    ```
-
-3.  **Connecting to Ollama from Docker:**
-    If you see `🔴 Ollama Connection Failed` inside the Docker app:
-    1.  Go to the Sidebar in the Web App.
-    2.  Change **Ollama API URL** from `http://localhost:11434/v1` to:
-        ```
-        http://host.docker.internal:11434/v1
-        ```
-    3.  Click **🔄 Check Connection**.
-
-    *Why? `localhost` inside Docker refers to the container itself, not your computer. `host.docker.internal` is the special address to reach your host machine.*
+```bash
+docker build -t trade-finance-agent .
+docker run -p 8501:8501 trade-finance-agent
+```
 
 ---
 
 ## 📝 Documentation Resources
 
-- **[PICK Strategy](docs/PICK_STRATEGY.md):** Detailed breakdown of data extraction strategy.
-- **[LC Reference](docs/LC_TYPES_DETAILS_PARTIES.md):** Comprehensive guide to LC fields and parties.
+- **[PICK Strategy](docs/PICK_STRATEGY.md):** Data extraction strategy.
+- **[Evidence Referencing](app/utils/referencing.py):** New professional reporting utility.
 - **[Phase 2 Implementation](docs/PHASE_2_MCP_AGENTS.md):** Technical details of the Multi-Agent architecture.
 
 ---
