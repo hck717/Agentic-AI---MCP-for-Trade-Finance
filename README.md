@@ -40,13 +40,11 @@ app/skills/trade_document_processing/
     └── validation.py # "Execute": Performs semantic logic
 ```
 
-This structure allows agents to "mount" a skill and access both the **code** to execute tasks and the **rules** to understand them.
-
 ---
 
 ## ⚡ Quick Start
 
-### Option 1: Run Locally (Virtual Env)
+### Option 1: Run Locally (Streamlit UI) 🖥️
 
 1.  **Clone the repository:**
     ```bash
@@ -65,10 +63,11 @@ This structure allows agents to "mount" a skill and access both the **code** to 
     pip install -r requirements.txt
     ```
 
-4.  **Run the POC:**
+4.  **Run the Web App:**
     ```bash
-    python -m app.main
+    streamlit run app/ui/streamlit_app.py
     ```
+    Access the UI at `http://localhost:8501`
 
 ### Option 2: Run with Docker 🐳
 
@@ -79,8 +78,9 @@ This structure allows agents to "mount" a skill and access both the **code** to 
 
 2.  **Run the Container:**
     ```bash
-    docker run trade-finance-agent
+    docker run -p 8501:8501 trade-finance-agent
     ```
+    Access the UI at `http://localhost:8501`
 
 ---
 
@@ -96,6 +96,7 @@ This structure allows agents to "mount" a skill and access both the **code** to 
 
 - **LangGraph:** For stateful, multi-agent orchestration.
 - **Pydantic:** For strict data validation and standardized schemas.
+- **Streamlit:** For the interactive web interface.
 - **Python 3.11:** Core programming language.
 - **Docker:** For containerized deployment.
 
