@@ -17,6 +17,16 @@ A classic compliance challenge is the **Description Mismatch**:
 
 ---
 
+## 🖥️ Web Interface Features
+
+The project now includes a **Streamlit UI** to visualize the agent's reasoning process:
+
+*   **🤖 Real-time Agent Thoughts:** Watch the "Planner", "B/L Expert", and "Invoice Expert" think and act in real-time.
+*   **✅ Visual Verdict:** Clear Green (Compliant) or Red (Discrepant) report cards.
+*   **🔍 Explainable AI:** Expandable sections showing the exact ISBP 745 rules applied (e.g., *why* "Electronic Devices" was accepted).
+
+---
+
 ## 🏗️ Architecture: Plan-Pick-Execute
 
 The system uses a **ReAct Pattern** (Reasoning + Acting) orchestrated by **LangGraph**.
@@ -67,7 +77,7 @@ app/skills/trade_document_processing/
     ```bash
     streamlit run app/ui/streamlit_app.py
     ```
-    Access the UI at `http://localhost:8501`
+    👉 Access the UI at `http://localhost:8501`
 
 ### Option 2: Run with Docker 🐳
 
@@ -80,7 +90,7 @@ app/skills/trade_document_processing/
     ```bash
     docker run -p 8501:8501 trade-finance-agent
     ```
-    Access the UI at `http://localhost:8501`
+    👉 Access the UI at `http://localhost:8501`
 
 ---
 
