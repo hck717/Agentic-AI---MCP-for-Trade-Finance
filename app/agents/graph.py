@@ -1,8 +1,12 @@
 from typing import TypedDict, List
 from langgraph.graph import StateGraph, END
 from app.models.schemas import AgentState, LCData, InvoiceData, BLData
-from app.mcp.skills import (
-    pick_lc_data, pick_invoice_data, pick_bl_data,
+
+# IMPORT FROM NEW SKILLS STRUCTURE
+from app.skills.trade_document_processing.scripts.extraction import (
+    pick_lc_data, pick_invoice_data, pick_bl_data
+)
+from app.skills.trade_document_processing.scripts.validation import (
     execute_semantic_validation, execute_port_validation, execute_date_validation
 )
 
