@@ -9,20 +9,24 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")
 
 from app.agents.graph import build_graph
 
-# --- LLM Integration (OpenAI) ---
+# --- LLM Integration (Local Llama 3.2 via Ollama) ---
 try:
     from openai import OpenAI
-    client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+    # Point to local Ollama instance
+    client = OpenAI(
+        base_url="http://localhost:11434/v1",
+        api_key="ollama" # Required but ignored by Ollama
+    )
     HAS_LLM = True
 except Exception:
     HAS_LLM = False
 
 def query_llm(user_query, context_data):
     """
-    Uses an LLM to answer questions based on the compliance check results.
+    Uses local Llama 3.2 to answer questions based on the compliance check results.
     """
     if not HAS_LLM:
-        return "⚠️ OpenAI API Key not found. Please set OPENAI_API_KEY env var for smart chat."
+        return "⚠️ OpenAI SDK not found. Please install 'openai' package."
 
     system_prompt = f"""
     You are an expert Trade Finance Compliance Assistant.
@@ -41,7 +45,7 @@ def query_llm(user_query, context_data):
     
     try:
         response = client.chat.completions.create(
-            model="gpt-4o-mini", # Cost-effective and fast
+            model="llama3.2", # Local model name
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_query}
@@ -50,7 +54,7 @@ def query_llm(user_query, context_data):
         )
         return response.choices[0].message.content
     except Exception as e:
-        return f"Error calling LLM: {str(e)}"
+        return f"Error calling Local LLM: {str(e)}. Ensure Ollama is running and 'llama3.2' is pulled."
 
 st.set_page_config(
     page_title="AI Trade Finance Agent",
@@ -119,12 +123,20 @@ with st.sidebar:
     st.checkbox("Packing List (PL)", value=True, disabled=True)
     
     st.markdown("---")
-    if not HAS_LLM:
-        st.warning("⚠️ No OpenAI API Key found. Chat will be disabled.")
-    else:
-        st.success("🟢 AI Chat Ready (GPT-4o)")
     
-    st.caption("v1.3.0 | Built by hck717")
+    # LLM Status Check
+    if HAS_LLM:
+        try:
+            # Simple health check to Ollama
+            client.models.list()
+            st.success("🟢 Local Llama 3.2 Connected")
+        except:
+             st.error("🔴 Ollama Connection Failed")
+             st.caption("Ensure `ollama serve` is running")
+    else:
+        st.warning("⚠️ OpenAI SDK missing")
+    
+    st.caption("v1.4.0 | Built by hck717")
 
 # --- Scenario Info Box ---
 if selected_scenario_id == "apple":
@@ -266,10 +278,10 @@ if prompt := st.chat_input("Ask about the compliance check..."):
                     "validation_details": state["validation_results"]
                 }
                 # Call LLM
-                with st.spinner("Thinking..."):
+                with st.spinner("Llama 3.2 is thinking..."):
                     response = query_llm(prompt, context)
             else:
-                response = "⚠️ Chat is disabled because OpenAI API Key is missing. Please set 'OPENAI_API_KEY' in your environment."
+                response = "⚠️ Chat is disabled because 'openai' package is missing."
         
         st.markdown(response)
         st.session_state.messages.append({"role": "assistant", "content": response})
