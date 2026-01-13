@@ -45,36 +45,78 @@ st.markdown("""
 st.title("🚢 Agentic AI Trade Finance Compliance")
 st.markdown("### Powered by LangGraph & MCP Skills")
 
-st.info("""
-**POC Demo Scenerio:**
-*   **LC Requirement:** "Apple iPhone 15 Pro Max smartphones"
-*   **B/L Description:** "Electronic Devices - Apple iPhone" (Generic Term)
-*   **Challenge:** Traditional systems fail this. Our AI Agent uses **ISBP 745 Art. E26** to validate it.
-""")
-
-# --- Sidebar ---
+# --- Sidebar (Configuration) ---
 with st.sidebar:
-    st.header("📂 Document Upload")
-    st.markdown("For this POC, we use pre-loaded mock documents.")
+    st.header("⚙️ Configuration")
     
+    # 1. Scenario Selector
+    scenario_option = st.selectbox(
+        "Select Mock Scenario:",
+        [
+            "1. Apple iPhone Import (Large Corp)",
+            "2. Vietnamese Silk (SME)",
+            "3. Indian Auto Parts (Mid-size)"
+        ]
+    )
+    
+    # Map selection to ID
+    scenario_map = {
+        "1. Apple iPhone Import (Large Corp)": "apple",
+        "2. Vietnamese Silk (SME)": "silk",
+        "3. Indian Auto Parts (Mid-size)": "auto"
+    }
+    selected_scenario_id = scenario_map[scenario_option]
+
+    st.markdown("---")
+    st.header("📂 Document Check")
     st.checkbox("Letter of Credit (LC)", value=True, disabled=True)
     st.checkbox("Bill of Lading (B/L)", value=True, disabled=True)
     st.checkbox("Commercial Invoice", value=True, disabled=True)
-    st.checkbox("Packing List (PL)", value=True, disabled=True) # Added
+    st.checkbox("Packing List (PL)", value=True, disabled=True)
     
     st.markdown("---")
-    st.caption("v1.1.0 | Built by hck717")
+    st.caption("v1.2.0 | Built by hck717")
+
+# --- Scenario Info Box ---
+if selected_scenario_id == "apple":
+    st.info("""
+    **Scenario: Apple iPhone Import**
+    *   **LC:** "Apple iPhone 15 Pro Max smartphones"
+    *   **B/L:** "Electronic Devices" (Generic)
+    *   **Challenge:** Semantic matching (ISBP 745 Art. E26).
+    """)
+elif selected_scenario_id == "silk":
+    st.info("""
+    **Scenario: Vietnamese Silk Export**
+    *   **LC:** "100% Silk Scarves"
+    *   **B/L:** "Textile Products - Silk" (Generic)
+    *   **Challenge:** Verify SME document consistency.
+    """)
+elif selected_scenario_id == "auto":
+    st.info("""
+    **Scenario: Indian Auto Parts**
+    *   **LC:** "Automotive Transmission & Gearbox Parts"
+    *   **B/L:** "Auto Parts" (Generic)
+    *   **Challenge:** High-value industrial parts verification.
+    """)
 
 # --- Session State for Chat ---
 if "messages" not in st.session_state:
     st.session_state.messages = []
 if "final_state" not in st.session_state:
     st.session_state.final_state = None
+if "last_scenario" not in st.session_state:
+    st.session_state.last_scenario = None
+
+# Reset chat if scenario changes
+if st.session_state.last_scenario != selected_scenario_id:
+    st.session_state.messages = []
+    st.session_state.final_state = None
+    st.session_state.last_scenario = selected_scenario_id
 
 # --- Main Action ---
 if st.button("🚀 Start Compliance Check", type="primary"):
     
-    # 1. Initialize Containers for Real-time Logging
     col1, col2 = st.columns(2)
     
     with col1:
@@ -82,45 +124,40 @@ if st.button("🚀 Start Compliance Check", type="primary"):
         planner_log = st.empty()
         bl_log = st.empty()
         inv_log = st.empty()
-        pl_log = st.empty() # Added
+        pl_log = st.empty()
         review_log = st.empty()
 
-    # 2. Run the Graph
+    # Run the Graph with selected scenario
     workflow = build_graph()
     
-    # --- Step 1: Planner ---
-    planner_log.info("🧠 **Planner:** Analyzing LC requirements...")
+    planner_log.info(f"🧠 **Planner:** Analyzing {selected_scenario_id.upper()} LC requirements...")
     time.sleep(1) 
     
-    final_state = workflow.invoke({})
-    st.session_state.final_state = final_state # Store state for Chat
+    # PASS SCENARIO ID HERE
+    final_state = workflow.invoke({"scenario_id": selected_scenario_id})
+    st.session_state.final_state = final_state
     
     planner_log.success("🧠 **Planner:** Plan created! Delegating to Experts.")
     
-    # --- Step 2: B/L Expert ---
     time.sleep(1)
     bl_log.info("🚢 **B/L Expert:** Checking Port, Date, and Description...")
     time.sleep(0.5)
     bl_log.success("🚢 **B/L Expert:** Checks complete.")
 
-    # --- Step 3: Invoice Expert ---
     time.sleep(1)
     inv_log.info("💰 **Invoice Expert:** Checking Amount and Description...")
     time.sleep(0.5)
     inv_log.success("💰 **Invoice Expert:** Checks complete.")
     
-    # --- Step 4: Packing List Expert (New) ---
     time.sleep(1)
     pl_log.info("📦 **PL Expert:** Checking Weights and Cross-references...")
     time.sleep(0.5)
     pl_log.success("📦 **PL Expert:** Checks complete.")
     
-    # --- Step 5: Reviewer ---
     time.sleep(1)
     review_log.info("⚖️ **Reviewer:** Analyzing findings against UCP 600...")
     time.sleep(0.5)
     
-    # --- Display Final Verdict ---
     with col2:
         st.subheader("📝 Final Compliance Report")
         
@@ -148,8 +185,6 @@ if st.button("🚀 Start Compliance Check", type="primary"):
             with st.expander(f"{icon} [{res['doc']}] {res['check']}"):
                 st.write(f"**Status:** {res['status']}")
                 st.write(f"**Reason:** {res['reason']}")
-                if "Goods Description" in res['check'] and res['doc'] == "B/L":
-                    st.info("💡 **AI Insight:** The Agent successfully applied **ISBP 745 Art. E26** to accept the generic description.")
 
     review_log.success("⚖️ **Reviewer:** Final Verdict Generated.")
 
@@ -157,19 +192,15 @@ if st.button("🚀 Start Compliance Check", type="primary"):
 st.markdown("---")
 st.subheader("💬 AI Compliance Assistant")
 
-# Display chat messages
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# User Input
-if prompt := st.chat_input("Ask about the compliance check (e.g., 'Why is the B/L compliant?'):"):
-    # Add user message
+if prompt := st.chat_input("Ask about the compliance check..."):
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
     
-    # Generate Response (Simulated RAG)
     with st.chat_message("assistant"):
         response = ""
         state = st.session_state.final_state
@@ -177,7 +208,6 @@ if prompt := st.chat_input("Ask about the compliance check (e.g., 'Why is the B/
         if not state:
             response = "Please run the compliance check first so I can analyze the documents."
         else:
-            # Simple keyword matching for POC
             p = prompt.lower()
             if "why" in p and "compliant" in p:
                 response = f"The transaction is compliant because: {state['reasoning']}"
